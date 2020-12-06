@@ -4,29 +4,313 @@
 #include <linux/device.h>
 #include <linux/uaccess.h>
 #include <linux/io.h>
+#include <linux/delay.h>
 
 MODULE_AUTHOR("Ryuichi Ueda and Masafumi Hoshino");
 MODULE_DESCRIPTION("driver for LED control");
 MODULE_LICENSE("GPL");
 MODULE_VERSION("0.0.1");
 
+#define sleep_time 500
+
 static dev_t dev;
 static struct cdev cdv;
 static struct class *cls = NULL;
 static volatile u32 *gpio_base = NULL;
 
+/*
+int morse[36][5] = {//0->short,1->long
+//a~m
+    {0,1},
+    {1,0,0,0},
+    {1,0,1,0},
+    {1,0,0},
+    {0},
+    {0,0,1,0},
+    {1,1,0},
+    {0,0,0,0},
+    {0,0},
+    {0,1,1,1},
+    {1,0,1},
+    {0,1,0,0},
+    {1,1},
+//n~z
+    {1,0},
+    {1,1,1},
+    {0,1,1,0},
+    {1,1,0,1},
+    {0,1,0},
+    {0,0,0},
+    {1},
+    {0,0,1},
+    {0,0,0,1},
+    {0,1,1},
+    {1,0,0,1},
+    {1,0,1,1},
+    {1,1,0,0},
+//0~1
+    {1,1,1,1,1},
+    {0,1,1,1,1},
+    {0,0,1,1,1},
+    {0,0,0,1,1},
+    {0,0,0,0,1},
+    {0,0,0,0,0},
+    {1,0,0,0,0},
+    {1,1,0,0,0},
+    {1,1,1,0,0},
+    {1,1,1,1,0}
+};
+*/
+int short_points(void){
+    gpio_base[7] = 1 << 25;
+    msleep(250);
+    gpio_base[10] = 1 << 25;
+    msleep(sleep_time);
+    return 0;
+}
+
+int long_points(void){
+    gpio_base[7] = 1 << 25;
+    msleep(750);
+    gpio_base[10] = 1 << 25;
+    msleep(sleep_time);
+    return 0;
+}
+
+int select(int a){
+    if (a == 0){
+        short_points();
+    }else if(a == 1){
+        long_points();
+    }
+    return 0;
+}
+
 static ssize_t led_write(struct file* filp, const char* buf, size_t count, loff_t* pos)
 {
     char c;
+    int i;
     if(copy_from_user(&c,buf,sizeof(char)))
         return -EFAULT;
 
 //    printk(KERN_INFO "receive %c\n",c);
 
+/*
+    if(c >='a' && c<='z'){
+        for(i=0;i<4;i++){
+            if(morse[c-97][i] == NULL) break;
+            select(morse[c-97][i]);
+        }
+    }else{
+        for(i=0;i<5;i++){
+            select(morse[c][i]);
+        }
+    }
+*/
     if(c == '0'){
-        gpio_base[10] = 1 << 25;
+        select(1);
+        select(1);
+        select(1);
+        select(1);
+        select(1);
+        msleep(1500);
     }else if(c == '1'){
-        gpio_base[7] = 1 << 25;
+        select(0);
+        select(1);
+        select(1);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == '2'){
+        select(0);
+        select(0);
+        select(1);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == '3'){
+        select(0);
+        select(0);
+        select(0);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == '4'){
+        select(0);
+        select(0);
+        select(0);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == '5'){
+        select(0);
+        select(0);
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == '6'){
+        select(1);
+        select(0);
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == '7'){
+        select(1);
+        select(1);
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == '8'){
+        select(1);
+        select(1);
+        select(1);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == '9'){
+        select(1);
+        select(1);
+        select(1);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'a'){
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'b'){
+        select(1);
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 'c'){
+        select(1);
+        select(0);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'd'){
+        select(1);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 'e'){
+        select(0);
+        msleep(1500);
+    }else if(c == 'f'){
+        select(0);
+        select(0);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'g'){
+        select(1);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'h'){
+        select(0);
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 'i'){
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 'j'){
+        select(0);
+        select(1);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == 'k'){
+        select(1);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'l'){
+        select(0);
+        select(1);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 'm'){
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == 'n'){
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'o'){
+        select(1);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == 'p'){
+        select(0);
+        select(1);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 'q'){
+        select(1);
+        select(1);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'r'){
+        select(0);
+        select(1);
+        select(0);
+        msleep(1500);
+    }else if(c == 's'){
+        select(0);
+        select(0);
+        select(0);
+        msleep(1500);
+    }else if(c == 't'){
+        select(1);
+        msleep(1500);
+    }else if(c == 'u'){
+        select(0);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'v'){
+        select(0);
+        select(0);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'w'){
+        select(0);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == 'x'){
+        select(1);
+        select(0);
+        select(0);
+        select(1);
+        msleep(1500);
+    }else if(c == 'y'){
+        select(1);
+        select(0);
+        select(1);
+        select(1);
+        msleep(1500);
+    }else if(c == 'z'){
+        select(1);
+        select(1);
+        select(0);
+        select(0);
+        msleep(1500);
     }
 
     return 1;
