@@ -9,7 +9,7 @@
 ### ビルド
 
 ```
-git clone
+git clone　https://github.com/HoshinoMasafumi/myled.git
 cd myled
 make
 sudo insmod myled.ko
