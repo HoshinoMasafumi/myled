@@ -8,13 +8,13 @@
 
 ### 使用した道具
 
-- Raspberry Pi 4 Model B  1台
+- Raspberry Pi 4 Model B
 
-- LED 1個
+- LED
 
-- ブレッドボード 1個
+- ブレッドボード
 
-- ジャンパーワイヤ  2本
+- ジャンパーワイヤ 2本
 
 ### ビルド
 
