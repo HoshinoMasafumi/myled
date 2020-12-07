@@ -6,6 +6,16 @@
 
 １つのLEDを使い、アルファベットと数字をモールス信号で表示する。
 
+### ビルド
+
+```
+git clone
+cd myled
+make
+sudo insmod myled.ko
+sudo chmod 666 /dev/myled0
+```
+
 ### 操作方法
 
 ```
