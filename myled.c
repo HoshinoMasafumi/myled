@@ -1,5 +1,5 @@
 //SPDX-License-Identifer: GPL-2
-// *Copyright (c) 2020 Masafumi Hoshino. All rights reserved..0
+// *Copyright (c) 2021 Masafumi Hoshino. All rights reserved.
 
 #include <linux/module.h>
 #include <linux/fs.h>
