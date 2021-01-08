@@ -41,3 +41,5 @@ echo 〇〇 > /dev/myled0
 〇〇に出力したいアルファベットや数字を入力する。
 
 ### ライセンス
+
+https://github.com/HoshinoMasafumi/myled/blob/main/COPYING
