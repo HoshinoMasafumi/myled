@@ -22,6 +22,8 @@
 
 ### デモ動画のリンク
 
+https://youtu.be/XIYi1GfzJEE
+
 ### インストール方法
 
 ```
