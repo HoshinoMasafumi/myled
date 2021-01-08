@@ -22,7 +22,7 @@
 
 ### デモ動画のリンク
 
-[[デモ動画>https://youtu.be/XIYi1GfzJEE]]
+[デモ動画](https://youtu.be/XIYi1GfzJEE)
 
 ### インストール方法
 
@@ -44,4 +44,4 @@ echo 〇〇 > /dev/myled0
 
 ### ライセンス
 
-[[GNU General Public License v2.0>https://github.com/HoshinoMasafumi/myled/blob/main/COPYING]]
+[GNU General Public License v2.0](https://github.com/HoshinoMasafumi/myled/blob/main/COPYING)
