@@ -42,6 +42,14 @@ echo 〇〇 > /dev/myled0
 
 〇〇に出力したいアルファベットや数字を入力する。
 
+### 動作終了後
+
+```
+sudo rmmod myled
+```
+
+このコマンドを打って終了してください。
+
 ### ライセンス
 
 [GNU General Public License v2.0](https://github.com/HoshinoMasafumi/myled/blob/main/COPYING)
